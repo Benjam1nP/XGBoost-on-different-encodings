@@ -6,9 +6,7 @@
 @import '@fontsource/geist-mono/500.css';
 @import '@fontsource/instrument-serif/400.css';
 
-@custom-variant dark (&:is(.dark *));
-
-/* Firn tokens — see STYLE.md. Light first, dark overrides below (dark is the default via app.html). */
+/* Firn tokens (light only) — see STYLE.md. */
 :root {
 	--radius: 0.5rem;
 
@@ -53,47 +51,6 @@
 	--sidebar-ring: #2a70b5;
 }
 
-.dark {
-	--background: #0a0e13;
-	--foreground: #eef3f7;
-	--card: #111821;
-	--card-foreground: #eef3f7;
-	--popover: #111821;
-	--popover-foreground: #eef3f7;
-	--primary: #8cc8f2;
-	--primary-foreground: #0a0e13;
-	--secondary: #18212c;
-	--secondary-foreground: #eef3f7;
-	--muted: #151d27;
-	--muted-foreground: #8b98a6;
-	--accent: #18212c;
-	--accent-foreground: #eef3f7;
-	--destructive: #f2777a;
-	--border: #1e2733;
-	--input: #263140;
-	--ring: #8cc8f2;
-	--link: #8cc8f2;
-	--agent-rule: #8cc8f2;
-
-	--chart-1: #8cc8f2; /* glacier-300 */
-	--chart-2: #8b98a6; /* mist */
-	--chart-3: #5b6773; /* stone */
-	--chart-4: #3b8bd4; /* glacier-500 */
-	--chart-5: #eef3f7; /* firn */
-
-	--gain: #3dd68c;
-	--loss: #f2777a;
-	--benchmark: #8b98a6;
-
-	--sidebar: #111821;
-	--sidebar-foreground: #eef3f7;
-	--sidebar-primary: #8cc8f2;
-	--sidebar-primary-foreground: #0a0e13;
-	--sidebar-accent: #18212c;
-	--sidebar-accent-foreground: #eef3f7;
-	--sidebar-border: #1e2733;
-	--sidebar-ring: #8cc8f2;
-}
 
 @theme inline {
 	--font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;

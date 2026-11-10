@@ -1,7 +1,6 @@
 <script lang="ts">
 	import * as Tabs from '#lib/components/ui/tabs/index.js';
 	import ModelPanel from '#lib/components/ModelPanel.svelte';
-	import ThemeToggle from '#lib/components/ThemeToggle.svelte';
 	import { MODELS, type ModelKey } from '#lib/experiment.js';
 	import { store } from '#lib/results.svelte.js';
 	import CircleNotch from '~icons/ph/circle-notch-light';
@@ -16,7 +15,6 @@
 				<span class="font-heading text-2xl leading-none">PPM</span>
 				<span class="hidden text-sm text-muted-foreground sm:inline">Sepsis cases · ICU prediction</span>
 			</div>
-			<ThemeToggle />
 		</div>
 	</header>
 
