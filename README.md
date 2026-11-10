@@ -28,3 +28,8 @@ run(ds, "index", "random_forest")   # pd.Series: prefix length -> AUC
 New encoding: add a module to `encoding/` with `NAME`, `BUCKETING` (`"single"` or `"prefix"`) and `encode(p, ds)`,
 then register it in `ENCODINGS` in `experiment.py`. New model: add a module to `models/` with `NAME` and `make_model()`
 and register it in `MODELS`.
+
+## Frontend
+
+`frontend/` is a SvelteKit app with one tab per model; each runs all three encodings and charts the comparison.
+See `frontend/README.md` (`cd frontend && npm install && npm run dev`).

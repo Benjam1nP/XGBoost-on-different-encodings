@@ -92,9 +92,33 @@ if __name__ == "__main__":
     ap.add_argument("-m", "--models", nargs="+", choices=list(MODELS), default=list(MODELS))
     ap.add_argument("--no-case-attributes", action="store_true")
     ap.add_argument("--data", default="sepsis_cases.csv")
+    ap.add_argument("--json", action="store_true", help="print one JSON object (used by the frontend)")
     a = ap.parse_args()
 
     ds = load_dataset(a.data)
+    if a.json:
+        import json
+        K = range(1, 9)
+        use_attr = not a.no_case_attributes
+        out = {"use_case_attributes": use_attr, "runs": [],
+               "test_cases": {}, "test_positives": {}}
+        for k in K:  # test-set size per prefix length (same for every encoding)
+            ids = prefix_log(ds, k).case_id.unique()
+            y = ds.labels[[i for i in ids if i not in ds.train_ids]]
+            out["test_cases"][k], out["test_positives"][k] = int(len(y)), int(y.sum())
+        for m in a.models:
+            for e in a.encodings:
+                t = time.time()
+                s = run(ds, e, m, K=K, use_case_attributes=use_attr)
+                enc, mdl = _load(ENCODINGS, e), _load(MODELS, m)
+                out["runs"].append({"encoding": e, "encoding_name": enc.NAME, "bucketing": enc.BUCKETING,
+                                    "model": m, "model_name": mdl.NAME,
+                                    "auc": {int(k): round(float(v), 4) for k, v in s.items()},
+                                    "mean_auc": round(float(s.mean()), 4),
+                                    "seconds": round(time.time() - t, 2)})
+        print(json.dumps(out))
+        raise SystemExit
+
     res = run_grid(ds, a.encodings, a.models, use_case_attributes=not a.no_case_attributes)
     pd.set_option("display.width", 200)
     print("\n", res.round(3).to_string())
