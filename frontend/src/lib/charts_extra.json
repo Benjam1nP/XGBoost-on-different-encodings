@@ -1,0 +1,185 @@
+{
+ "bpic_test_counts": [
+  {
+   "k": 1,
+   "cases": 228,
+   "positives": 109
+  },
+  {
+   "k": 2,
+   "cases": 225,
+   "positives": 107
+  },
+  {
+   "k": 3,
+   "cases": 216,
+   "positives": 107
+  },
+  {
+   "k": 4,
+   "cases": 211,
+   "positives": 107
+  },
+  {
+   "k": 5,
+   "cases": 205,
+   "positives": 107
+  },
+  {
+   "k": 6,
+   "cases": 199,
+   "positives": 107
+  },
+  {
+   "k": 7,
+   "cases": 198,
+   "positives": 106
+  },
+  {
+   "k": 8,
+   "cases": 196,
+   "positives": 106
+  },
+  {
+   "k": 9,
+   "cases": 195,
+   "positives": 105
+  },
+  {
+   "k": 10,
+   "cases": 195,
+   "positives": 105
+  }
+ ],
+ "index_overfit": [
+  {
+   "k": 1,
+   "columns": {
+    "last_state": 38,
+    "aggregation": 41,
+    "index": 12
+   },
+   "train_cases": {
+    "last_state": 6306,
+    "aggregation": 6306,
+    "index": 839
+   }
+  },
+  {
+   "k": 2,
+   "columns": {
+    "last_state": 38,
+    "aggregation": 41,
+    "index": 24
+   },
+   "train_cases": {
+    "last_state": 6306,
+    "aggregation": 6306,
+    "index": 839
+   }
+  },
+  {
+   "k": 3,
+   "columns": {
+    "last_state": 38,
+    "aggregation": 41,
+    "index": 36
+   },
+   "train_cases": {
+    "last_state": 6306,
+    "aggregation": 6306,
+    "index": 839
+   }
+  },
+  {
+   "k": 4,
+   "columns": {
+    "last_state": 38,
+    "aggregation": 41,
+    "index": 52
+   },
+   "train_cases": {
+    "last_state": 6306,
+    "aggregation": 6306,
+    "index": 813
+   }
+  },
+  {
+   "k": 5,
+   "columns": {
+    "last_state": 38,
+    "aggregation": 41,
+    "index": 65
+   },
+   "train_cases": {
+    "last_state": 6306,
+    "aggregation": 6306,
+    "index": 810
+   }
+  },
+  {
+   "k": 6,
+   "columns": {
+    "last_state": 38,
+    "aggregation": 41,
+    "index": 91
+   },
+   "train_cases": {
+    "last_state": 6306,
+    "aggregation": 6306,
+    "index": 759
+   }
+  },
+  {
+   "k": 7,
+   "columns": {
+    "last_state": 38,
+    "aggregation": 41,
+    "index": 111
+   },
+   "train_cases": {
+    "last_state": 6306,
+    "aggregation": 6306,
+    "index": 721
+   }
+  },
+  {
+   "k": 8,
+   "columns": {
+    "last_state": 38,
+    "aggregation": 41,
+    "index": 134
+   },
+   "train_cases": {
+    "last_state": 6306,
+    "aggregation": 6306,
+    "index": 686
+   }
+  }
+ ],
+ "registration_features": [
+  "age",
+  "diagnosticartastrup",
+  "diagnosticblood",
+  "diagnosticecg",
+  "diagnosticic",
+  "diagnosticlacticacid",
+  "diagnosticliquor",
+  "diagnosticother",
+  "diagnosticsputum",
+  "diagnosticurinaryculture",
+  "diagnosticurinarysediment",
+  "diagnosticxthorax",
+  "sirscritheartrate",
+  "sirscritleucos",
+  "sirscrittachypnea",
+  "sirscrittemperature",
+  "sirscriteria2ormore",
+  "disfuncorg",
+  "hypotensie",
+  "hypoxie",
+  "oligurie",
+  "infectionsuspected",
+  "infusion"
+ ]
+}

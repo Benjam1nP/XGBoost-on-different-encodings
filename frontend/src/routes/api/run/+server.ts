@@ -5,7 +5,7 @@ import path from 'node:path';
 import type { RequestHandler } from './$types';
 import type { ModelKey } from '#lib/experiment.js';
 
-const MODELS: ModelKey[] = ['xgboost', 'random_forest', 'logistic_regression', 'svm'];
+const MODELS: ModelKey[] = ['xgboost', 'random_forest', 'logistic_regression'];
 const TIMEOUT_MS = 10 * 60 * 1000;
 
 // The Python project is the parent folder of the frontend unless DEMO_DIR says otherwise.
@@ -41,7 +41,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	if (!MODELS.includes(model)) error(400, `Unknown model "${body.model}"`);
 
 	const args = ['experiment.py', '--json', '-m', model];
-	if (body.caseAttributes === false) args.push('--no-case-attributes');
+	if (body.caseAttributes === false) args.push('--initial', 'none');
 
 	try {
 		const stdout = await runPython(args);

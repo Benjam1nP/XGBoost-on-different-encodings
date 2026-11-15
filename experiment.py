@@ -1,25 +1,28 @@
 """Combine any encoding with any model and report AUC per prefix length.
 
 Command line:
-    python experiment.py                                   # every encoding x every model
-    python experiment.py -e aggregation index -m svm xgboost
-    python experiment.py --no-case-attributes
+    python experiment.py                                     # Sepsis, every encoding x every model
+    python experiment.py -d bpic2011 -e index -m xgboost
+    python experiment.py --initial none                      # without initial (registration) data
 
 From a notebook:
-    from experiment import run, ENCODINGS, MODELS
+    from experiment import run
     from data import load_dataset
-    ds = load_dataset()
-    auc = run(ds, ENCODINGS["index"], MODELS["svm"])        # pd.Series: prefix length -> AUC
+    ds = load_dataset("sepsis")
+    auc = run(ds, "index", "random_forest")                  # pd.Series: prefix length -> AUC
+
+Random forest and XGBoost are averaged over SEEDS (AUC per prefix length, mean over seeds).
 """
 import argparse
 import importlib
 import time
 import warnings
 
+import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 
-from data import add_common_features, load_dataset, prefix_log
+from data import LOADERS, add_common_features, load_dataset, prefix_log
 
 ENCODINGS = {
     "last_state": "encoding.last_state",
@@ -27,11 +30,11 @@ ENCODINGS = {
     "index": "encoding.index",
 }
 MODELS = {
-    "xgboost": "models.xgb",
-    "svm": "models.svm",
     "logistic_regression": "models.logistic_regression",
     "random_forest": "models.random_forest",
+    "xgboost": "models.xgb",
 }
+SEEDS = (0, 1, 2)
 
 
 def _load(registry, key):
@@ -39,9 +42,10 @@ def _load(registry, key):
     return importlib.import_module(registry[key]) if isinstance(registry[key], str) else registry[key]
 
 
-def _encode(ds, enc, k, use_case_attributes):
+def encode_prefixes(ds, enc, k, initial="all"):
+    enc = _load(ENCODINGS, enc) if isinstance(enc, str) else enc
     p = prefix_log(ds, k)
-    return add_common_features(enc.encode(p, ds), p, ds, use_case_attributes)
+    return add_common_features(enc.encode(p, ds), p, ds, initial)
 
 
 def _split(ds, X):
@@ -49,29 +53,46 @@ def _split(ds, X):
     return X[tr], ds.labels[X.index[tr]], X[~tr], ds.labels[X.index[~tr]]
 
 
-def run(ds, enc, mdl, K=range(1, 9), use_case_attributes=True):
-    """Train/evaluate one encoding+model combination. Returns AUC per prefix length."""
-    enc = _load(ENCODINGS, enc) if isinstance(enc, str) else enc
-    mdl = _load(MODELS, mdl) if isinstance(mdl, str) else mdl
+def _run_once(ds, enc, mdl, K, initial, seed):
     auc = {}
     if enc.BUCKETING == "single":
         # one model trained on the prefixes of all lengths stacked together
-        X = pd.concat([_encode(ds, enc, k, use_case_attributes) for k in K])
+        X = pd.concat([encode_prefixes(ds, enc, k, initial) for k in K])
         Xtr, ytr, Xte, yte = _split(ds, X)
-        prob = mdl.make_model().fit(Xtr, ytr).predict_proba(Xte)[:, 1]
+        prob = mdl.make_model(seed).fit(Xtr, ytr).predict_proba(Xte)[:, 1]
         for k in K:
             m = (Xte.prefix_len == k).values
             auc[k] = roc_auc_score(yte[m], prob[m])
     else:
         # one model per prefix length
         for k in K:
-            X = _encode(ds, enc, k, use_case_attributes)
+            X = encode_prefixes(ds, enc, k, initial)
             Xtr, ytr, Xte, yte = _split(ds, X)
             Xte = Xte.reindex(columns=Xtr.columns, fill_value=0)
-            auc[k] = roc_auc_score(yte, mdl.make_model().fit(Xtr, ytr).predict_proba(Xte)[:, 1])
-    s = pd.Series(auc, name=f"{enc.NAME} + {mdl.NAME}")
+            auc[k] = roc_auc_score(yte, mdl.make_model(seed).fit(Xtr, ytr).predict_proba(Xte)[:, 1])
+    return pd.Series(auc)
+
+
+def run(ds, enc, mdl, K=None, initial="all", seeds=SEEDS):
+    """Train/evaluate one encoding+model combination. Returns AUC per prefix length."""
+    enc = _load(ENCODINGS, enc) if isinstance(enc, str) else enc
+    mdl = _load(MODELS, mdl) if isinstance(mdl, str) else mdl
+    K = range(1, ds.max_k + 1) if K is None else K
+    seeds = seeds if getattr(mdl, "SEEDED", False) else seeds[:1]
+    s = pd.concat([_run_once(ds, enc, mdl, K, initial, sd) for sd in seeds], axis=1).mean(axis=1)
+    s.name = f"{enc.NAME} + {mdl.NAME}"
     s.index.name = "prefix length"
     return s
+
+
+def test_counts(ds, K=None):
+    """Test cases and positives per prefix length (identical for every encoding)."""
+    K = range(1, ds.max_k + 1) if K is None else K
+    out = {}
+    for k in K:
+        ids = [i for i in prefix_log(ds, k).case_id.unique() if i not in ds.train_ids]
+        out[k] = (len(ids), int(ds.labels[ids].sum()))
+    return out
 
 
 def run_grid(ds, encodings=ENCODINGS, models=MODELS, **kw):
@@ -88,38 +109,34 @@ def run_grid(ds, encodings=ENCODINGS, models=MODELS, **kw):
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("-d", "--dataset", choices=list(LOADERS), default="sepsis")
     ap.add_argument("-e", "--encodings", nargs="+", choices=list(ENCODINGS), default=list(ENCODINGS))
     ap.add_argument("-m", "--models", nargs="+", choices=list(MODELS), default=list(MODELS))
-    ap.add_argument("--no-case-attributes", action="store_true")
-    ap.add_argument("--data", default="sepsis_cases.csv")
+    ap.add_argument("--initial", default="all", help="initial-data variant, e.g. all / none")
     ap.add_argument("--json", action="store_true", help="print one JSON object (used by the frontend)")
     a = ap.parse_args()
 
-    ds = load_dataset(a.data)
+    ds = load_dataset(a.dataset)
     if a.json:
         import json
-        K = range(1, 9)
-        use_attr = not a.no_case_attributes
-        out = {"use_case_attributes": use_attr, "runs": [],
-               "test_cases": {}, "test_positives": {}}
-        for k in K:  # test-set size per prefix length (same for every encoding)
-            ids = prefix_log(ds, k).case_id.unique()
-            y = ds.labels[[i for i in ids if i not in ds.train_ids]]
-            out["test_cases"][k], out["test_positives"][k] = int(len(y)), int(y.sum())
+        counts = test_counts(ds)
+        out = {"use_case_attributes": a.initial != "none", "runs": [],
+               "test_cases": {k: n for k, (n, _) in counts.items()},
+               "test_positives": {k: p for k, (_, p) in counts.items()}}
         for m in a.models:
             for e in a.encodings:
                 t = time.time()
-                s = run(ds, e, m, K=K, use_case_attributes=use_attr)
+                s = run(ds, e, m, initial=a.initial)
                 enc, mdl = _load(ENCODINGS, e), _load(MODELS, m)
                 out["runs"].append({"encoding": e, "encoding_name": enc.NAME, "bucketing": enc.BUCKETING,
                                     "model": m, "model_name": mdl.NAME,
                                     "auc": {int(k): round(float(v), 4) for k, v in s.items()},
-                                    "mean_auc": round(float(s.mean()), 4),
+                                    "mean_auc": round(float(np.mean(s)), 4),
                                     "seconds": round(time.time() - t, 2)})
         print(json.dumps(out))
         raise SystemExit
 
-    res = run_grid(ds, a.encodings, a.models, use_case_attributes=not a.no_case_attributes)
+    res = run_grid(ds, a.encodings, a.models, initial=a.initial)
     pd.set_option("display.width", 200)
     print("\n", res.round(3).to_string())
     print("\nmean AUC:\n", res.mean().round(3).sort_values(ascending=False).to_string())

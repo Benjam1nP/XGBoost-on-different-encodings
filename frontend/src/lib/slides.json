@@ -1,0 +1,928 @@
+{
+ "settings": {
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "train_share": 0.8
+ },
+ "sepsis": {
+  "case": {
+   "case_id": "A",
+   "label": 0,
+   "events": [
+    {
+     "pos": 1,
+     "activity": "ER Registration",
+     "resource": "A",
+     "timestamp": "2014-10-22 11:15",
+     "crp": null,
+     "leucocytes": null,
+     "lacticacid": null
+    },
+    {
+     "pos": 2,
+     "activity": "Leucocytes",
+     "resource": "B",
+     "timestamp": "2014-10-22 11:27",
+     "crp": null,
+     "leucocytes": 9.6,
+     "lacticacid": null
+    },
+    {
+     "pos": 3,
+     "activity": "CRP",
+     "resource": "B",
+     "timestamp": "2014-10-22 11:27",
+     "crp": 210.0,
+     "leucocytes": null,
+     "lacticacid": null
+    },
+    {
+     "pos": 4,
+     "activity": "LacticAcid",
+     "resource": "B",
+     "timestamp": "2014-10-22 11:27",
+     "crp": null,
+     "leucocytes": null,
+     "lacticacid": 2.2
+    },
+    {
+     "pos": 5,
+     "activity": "ER Triage",
+     "resource": "C",
+     "timestamp": "2014-10-22 11:33",
+     "crp": null,
+     "leucocytes": null,
+     "lacticacid": null
+    },
+    {
+     "pos": 6,
+     "activity": "ER Sepsis Triage",
+     "resource": "A",
+     "timestamp": "2014-10-22 11:34",
+     "crp": null,
+     "leucocytes": null,
+     "lacticacid": null
+    },
+    {
+     "pos": 7,
+     "activity": "IV Liquid",
+     "resource": "A",
+     "timestamp": "2014-10-22 14:03",
+     "crp": null,
+     "leucocytes": null,
+     "lacticacid": null
+    },
+    {
+     "pos": 8,
+     "activity": "IV Antibiotics",
+     "resource": "A",
+     "timestamp": "2014-10-22 14:03",
+     "crp": null,
+     "leucocytes": null,
+     "lacticacid": null
+    }
+   ],
+   "n_events_after_cut": 21
+  },
+  "encoded": {
+   "last_state": {
+    "features": [
+     {
+      "feature": "activity_LacticAcid",
+      "value": 1.0
+     },
+     {
+      "feature": "resource_B",
+      "value": 1.0
+     },
+     {
+      "feature": "last_crp",
+      "value": 210.0
+     },
+     {
+      "feature": "last_leucocytes",
+      "value": 9.6
+     },
+     {
+      "feature": "last_lacticacid",
+      "value": 2.2
+     },
+     {
+      "feature": "elapsed_h",
+      "value": 0.1886
+     },
+     {
+      "feature": "prefix_len",
+      "value": 4.0
+     }
+    ],
+    "initial": [
+     {
+      "feature": "age",
+      "value": 85.0
+     },
+     {
+      "feature": "diagnosticartastrup",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticblood",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticecg",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticic",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticlacticacid",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticurinaryculture",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticurinarysediment",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticxthorax",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscritheartrate",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscrittachypnea",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscrittemperature",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscriteria2ormore",
+      "value": 1.0
+     },
+     {
+      "feature": "disfuncorg",
+      "value": 1.0
+     },
+     {
+      "feature": "hypotensie",
+      "value": 1.0
+     },
+     {
+      "feature": "infectionsuspected",
+      "value": 1.0
+     },
+     {
+      "feature": "infusion",
+      "value": 1.0
+     }
+    ],
+    "n_columns": 61
+   },
+   "aggregation": {
+    "features": [
+     {
+      "feature": "count_CRP",
+      "value": 1.0
+     },
+     {
+      "feature": "count_ER Registration",
+      "value": 1.0
+     },
+     {
+      "feature": "count_LacticAcid",
+      "value": 1.0
+     },
+     {
+      "feature": "count_Leucocytes",
+      "value": 1.0
+     },
+     {
+      "feature": "res_A",
+      "value": 1.0
+     },
+     {
+      "feature": "res_B",
+      "value": 3.0
+     },
+     {
+      "feature": "crp_mean",
+      "value": 210.0
+     },
+     {
+      "feature": "leucocytes_mean",
+      "value": 9.6
+     },
+     {
+      "feature": "lacticacid_mean",
+      "value": 2.2
+     },
+     {
+      "feature": "crp_max",
+      "value": 210.0
+     },
+     {
+      "feature": "leucocytes_max",
+      "value": 9.6
+     },
+     {
+      "feature": "lacticacid_max",
+      "value": 2.2
+     },
+     {
+      "feature": "elapsed_h",
+      "value": 0.1886
+     },
+     {
+      "feature": "prefix_len",
+      "value": 4.0
+     }
+    ],
+    "initial": [
+     {
+      "feature": "age",
+      "value": 85.0
+     },
+     {
+      "feature": "diagnosticartastrup",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticblood",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticecg",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticic",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticlacticacid",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticurinaryculture",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticurinarysediment",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticxthorax",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscritheartrate",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscrittachypnea",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscrittemperature",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscriteria2ormore",
+      "value": 1.0
+     },
+     {
+      "feature": "disfuncorg",
+      "value": 1.0
+     },
+     {
+      "feature": "hypotensie",
+      "value": 1.0
+     },
+     {
+      "feature": "infectionsuspected",
+      "value": 1.0
+     },
+     {
+      "feature": "infusion",
+      "value": 1.0
+     }
+    ],
+    "n_columns": 64
+   },
+   "index": {
+    "features": [
+     {
+      "feature": "activity_1_ER Registration",
+      "value": 1.0
+     },
+     {
+      "feature": "activity_2_Leucocytes",
+      "value": 1.0
+     },
+     {
+      "feature": "activity_3_CRP",
+      "value": 1.0
+     },
+     {
+      "feature": "activity_4_LacticAcid",
+      "value": 1.0
+     },
+     {
+      "feature": "resource_1_A",
+      "value": 1.0
+     },
+     {
+      "feature": "resource_2_B",
+      "value": 1.0
+     },
+     {
+      "feature": "resource_3_B",
+      "value": 1.0
+     },
+     {
+      "feature": "resource_4_B",
+      "value": 1.0
+     },
+     {
+      "feature": "elapsed_h",
+      "value": 0.1886
+     },
+     {
+      "feature": "prefix_len",
+      "value": 4.0
+     }
+    ],
+    "initial": [
+     {
+      "feature": "age",
+      "value": 85.0
+     },
+     {
+      "feature": "diagnosticartastrup",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticblood",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticecg",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticic",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticlacticacid",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticurinaryculture",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticurinarysediment",
+      "value": 1.0
+     },
+     {
+      "feature": "diagnosticxthorax",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscritheartrate",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscrittachypnea",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscrittemperature",
+      "value": 1.0
+     },
+     {
+      "feature": "sirscriteria2ormore",
+      "value": 1.0
+     },
+     {
+      "feature": "disfuncorg",
+      "value": 1.0
+     },
+     {
+      "feature": "hypotensie",
+      "value": 1.0
+     },
+     {
+      "feature": "infectionsuspected",
+      "value": 1.0
+     },
+     {
+      "feature": "infusion",
+      "value": 1.0
+     }
+    ],
+    "n_columns": 75
+   }
+  },
+  "models": [
+   {
+    "model": "logistic_regression",
+    "encoding": "last_state",
+    "auc": {
+     "1": 0.7477,
+     "2": 0.7693,
+     "3": 0.7585,
+     "4": 0.7984,
+     "5": 0.8228,
+     "6": 0.854,
+     "7": 0.8295,
+     "8": 0.7733
+    },
+    "mean_auc": 0.7942
+   },
+   {
+    "model": "logistic_regression",
+    "encoding": "aggregation",
+    "auc": {
+     "1": 0.7516,
+     "2": 0.7701,
+     "3": 0.7594,
+     "4": 0.7773,
+     "5": 0.8146,
+     "6": 0.8521,
+     "7": 0.8298,
+     "8": 0.7779
+    },
+    "mean_auc": 0.7916
+   },
+   {
+    "model": "logistic_regression",
+    "encoding": "index",
+    "auc": {
+     "1": 0.7286,
+     "2": 0.7002,
+     "3": 0.7444,
+     "4": 0.6838,
+     "5": 0.7212,
+     "6": 0.7576,
+     "7": 0.7915,
+     "8": 0.6968
+    },
+    "mean_auc": 0.728
+   },
+   {
+    "model": "random_forest",
+    "encoding": "last_state",
+    "auc": {
+     "1": 0.7931,
+     "2": 0.7866,
+     "3": 0.7904,
+     "4": 0.8003,
+     "5": 0.8409,
+     "6": 0.8486,
+     "7": 0.8197,
+     "8": 0.8091
+    },
+    "mean_auc": 0.8111
+   },
+   {
+    "model": "random_forest",
+    "encoding": "aggregation",
+    "auc": {
+     "1": 0.787,
+     "2": 0.784,
+     "3": 0.7921,
+     "4": 0.8042,
+     "5": 0.8348,
+     "6": 0.8223,
+     "7": 0.8082,
+     "8": 0.8192
+    },
+    "mean_auc": 0.8065
+   },
+   {
+    "model": "random_forest",
+    "encoding": "index",
+    "auc": {
+     "1": 0.7844,
+     "2": 0.7724,
+     "3": 0.8207,
+     "4": 0.7455,
+     "5": 0.785,
+     "6": 0.8145,
+     "7": 0.8059,
+     "8": 0.7352
+    },
+    "mean_auc": 0.7829
+   },
+   {
+    "model": "xgboost",
+    "encoding": "last_state",
+    "auc": {
+     "1": 0.7778,
+     "2": 0.7931,
+     "3": 0.7939,
+     "4": 0.7638,
+     "5": 0.777,
+     "6": 0.7789,
+     "7": 0.7526,
+     "8": 0.7646
+    },
+    "mean_auc": 0.7752
+   },
+   {
+    "model": "xgboost",
+    "encoding": "aggregation",
+    "auc": {
+     "1": 0.7691,
+     "2": 0.7896,
+     "3": 0.792,
+     "4": 0.7617,
+     "5": 0.7755,
+     "6": 0.7749,
+     "7": 0.7555,
+     "8": 0.7675
+    },
+    "mean_auc": 0.7732
+   },
+   {
+    "model": "xgboost",
+    "encoding": "index",
+    "auc": {
+     "1": 0.7952,
+     "2": 0.7693,
+     "3": 0.8173,
+     "4": 0.7295,
+     "5": 0.769,
+     "6": 0.8134,
+     "7": 0.7935,
+     "8": 0.7006
+    },
+    "mean_auc": 0.7735
+   }
+  ],
+  "initial": [
+   {
+    "variant": "all",
+    "auc": {
+     "1": 0.7931,
+     "2": 0.7866,
+     "3": 0.7904,
+     "4": 0.8003,
+     "5": 0.8409,
+     "6": 0.8486,
+     "7": 0.8197,
+     "8": 0.8091
+    },
+    "mean_auc": 0.8111
+   },
+   {
+    "variant": "no_symptoms",
+    "auc": {
+     "1": 0.6955,
+     "2": 0.6945,
+     "3": 0.6964,
+     "4": 0.7153,
+     "5": 0.7438,
+     "6": 0.738,
+     "7": 0.6946,
+     "8": 0.7057
+    },
+    "mean_auc": 0.7105
+   },
+   {
+    "variant": "age_diagnostic",
+    "auc": {
+     "1": 0.6645,
+     "2": 0.6632,
+     "3": 0.6485,
+     "4": 0.6862,
+     "5": 0.739,
+     "6": 0.7203,
+     "7": 0.6864,
+     "8": 0.6945
+    },
+    "mean_auc": 0.6878
+   },
+   {
+    "variant": "none",
+    "auc": {
+     "1": 0.4904,
+     "2": 0.5836,
+     "3": 0.6016,
+     "4": 0.6352,
+     "5": 0.7341,
+     "6": 0.652,
+     "7": 0.6189,
+     "8": 0.596
+    },
+    "mean_auc": 0.614
+   }
+  ],
+  "test_counts": [
+   {
+    "k": 1,
+    "cases": 210,
+    "positives": 22
+   },
+   {
+    "k": 2,
+    "cases": 210,
+    "positives": 22
+   },
+   {
+    "k": 3,
+    "cases": 210,
+    "positives": 22
+   },
+   {
+    "k": 4,
+    "cases": 201,
+    "positives": 22
+   },
+   {
+    "k": 5,
+    "cases": 200,
+    "positives": 21
+   },
+   {
+    "k": 6,
+    "cases": 184,
+    "positives": 20
+   },
+   {
+    "k": 7,
+    "cases": 173,
+    "positives": 19
+   },
+   {
+    "k": 8,
+    "cases": 169,
+    "positives": 19
+   }
+  ],
+  "importance": [
+   {
+    "feature": "hypotensie",
+    "importance": 0.1758
+   },
+   {
+    "feature": "disfuncorg",
+    "importance": 0.0685
+   },
+   {
+    "feature": "diagnosticartastrup",
+    "importance": 0.043
+   },
+   {
+    "feature": "sirscrittachypnea",
+    "importance": 0.041
+   },
+   {
+    "feature": "hypoxie",
+    "importance": 0.0397
+   },
+   {
+    "feature": "oligurie",
+    "importance": 0.0374
+   },
+   {
+    "feature": "lacticacid_max",
+    "importance": 0.0316
+   },
+   {
+    "feature": "age",
+    "importance": 0.0314
+   },
+   {
+    "feature": "lacticacid_mean",
+    "importance": 0.0271
+   },
+   {
+    "feature": "sirscrittemperature",
+    "importance": 0.0258
+   }
+  ]
+ },
+ "bpic2011": {
+  "models": [
+   {
+    "model": "logistic_regression",
+    "encoding": "last_state",
+    "auc": {
+     "1": 0.8492,
+     "2": 0.8642,
+     "3": 0.8629,
+     "4": 0.8685,
+     "5": 0.881,
+     "6": 0.8892,
+     "7": 0.8889,
+     "8": 0.9023,
+     "9": 0.9059,
+     "10": 0.9003
+    },
+    "mean_auc": 0.8812
+   },
+   {
+    "model": "logistic_regression",
+    "encoding": "aggregation",
+    "auc": {
+     "1": 0.8496,
+     "2": 0.8631,
+     "3": 0.8532,
+     "4": 0.84,
+     "5": 0.8339,
+     "6": 0.8332,
+     "7": 0.8288,
+     "8": 0.8344,
+     "9": 0.8395,
+     "10": 0.835
+    },
+    "mean_auc": 0.8411
+   },
+   {
+    "model": "logistic_regression",
+    "encoding": "index",
+    "auc": {
+     "1": 0.8553,
+     "2": 0.8595,
+     "3": 0.7354,
+     "4": 0.7168,
+     "5": 0.7411,
+     "6": 0.7254,
+     "7": 0.7423,
+     "8": 0.7411,
+     "9": 0.7525,
+     "10": 0.753
+    },
+    "mean_auc": 0.7622
+   },
+   {
+    "model": "random_forest",
+    "encoding": "last_state",
+    "auc": {
+     "1": 0.8757,
+     "2": 0.8984,
+     "3": 0.8984,
+     "4": 0.9034,
+     "5": 0.8971,
+     "6": 0.895,
+     "7": 0.903,
+     "8": 0.8985,
+     "9": 0.9084,
+     "10": 0.9075
+    },
+    "mean_auc": 0.8985
+   },
+   {
+    "model": "random_forest",
+    "encoding": "aggregation",
+    "auc": {
+     "1": 0.8641,
+     "2": 0.8902,
+     "3": 0.8895,
+     "4": 0.8901,
+     "5": 0.8914,
+     "6": 0.8903,
+     "7": 0.8971,
+     "8": 0.8984,
+     "9": 0.9025,
+     "10": 0.9043
+    },
+    "mean_auc": 0.8918
+   },
+   {
+    "model": "random_forest",
+    "encoding": "index",
+    "auc": {
+     "1": 0.8553,
+     "2": 0.852,
+     "3": 0.8548,
+     "4": 0.8417,
+     "5": 0.8356,
+     "6": 0.8117,
+     "7": 0.8173,
+     "8": 0.797,
+     "9": 0.7976,
+     "10": 0.7944
+    },
+    "mean_auc": 0.8257
+   },
+   {
+    "model": "xgboost",
+    "encoding": "last_state",
+    "auc": {
+     "1": 0.8695,
+     "2": 0.8937,
+     "3": 0.8926,
+     "4": 0.8901,
+     "5": 0.891,
+     "6": 0.8922,
+     "7": 0.8986,
+     "8": 0.8964,
+     "9": 0.8968,
+     "10": 0.9015
+    },
+    "mean_auc": 0.8923
+   },
+   {
+    "model": "xgboost",
+    "encoding": "aggregation",
+    "auc": {
+     "1": 0.8501,
+     "2": 0.8698,
+     "3": 0.8804,
+     "4": 0.8789,
+     "5": 0.8767,
+     "6": 0.8759,
+     "7": 0.8805,
+     "8": 0.8848,
+     "9": 0.8909,
+     "10": 0.8893
+    },
+    "mean_auc": 0.8777
+   },
+   {
+    "model": "xgboost",
+    "encoding": "index",
+    "auc": {
+     "1": 0.8572,
+     "2": 0.8802,
+     "3": 0.8765,
+     "4": 0.867,
+     "5": 0.8743,
+     "6": 0.8762,
+     "7": 0.8808,
+     "8": 0.8861,
+     "9": 0.9065,
+     "10": 0.9007
+    },
+    "mean_auc": 0.8806
+   }
+  ],
+  "initial": [
+   {
+    "variant": "all",
+    "auc": {
+     "1": 0.8757,
+     "2": 0.8984,
+     "3": 0.8984,
+     "4": 0.9034,
+     "5": 0.8971,
+     "6": 0.895,
+     "7": 0.903,
+     "8": 0.8985,
+     "9": 0.9084,
+     "10": 0.9075
+    },
+    "mean_auc": 0.8985
+   },
+   {
+    "variant": "age",
+    "auc": {
+     "1": 0.5806,
+     "2": 0.664,
+     "3": 0.6453,
+     "4": 0.6331,
+     "5": 0.6081,
+     "6": 0.6021,
+     "7": 0.6204,
+     "8": 0.6052,
+     "9": 0.6085,
+     "10": 0.5952
+    },
+    "mean_auc": 0.6163
+   },
+   {
+    "variant": "none",
+    "auc": {
+     "1": 0.5928,
+     "2": 0.6301,
+     "3": 0.619,
+     "4": 0.5399,
+     "5": 0.4871,
+     "6": 0.4644,
+     "7": 0.4879,
+     "8": 0.4604,
+     "9": 0.468,
+     "10": 0.4509
+    },
+    "mean_auc": 0.5201
+   }
+  ]
+ }
+}

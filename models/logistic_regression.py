@@ -5,9 +5,10 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 NAME = "Logistic Regression"
+SEEDED = False   # deterministic, one run is enough
 
 
-def make_model():
+def make_model(seed=0):
     return make_pipeline(
         SimpleImputer(strategy="median", keep_empty_features=True),
         StandardScaler(),

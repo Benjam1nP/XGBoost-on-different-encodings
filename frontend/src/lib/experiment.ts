@@ -1,6 +1,6 @@
 // Shared types, metadata and the plain-language description of a run.
 
-export type ModelKey = 'xgboost' | 'random_forest' | 'logistic_regression' | 'svm';
+export type ModelKey = 'xgboost' | 'random_forest' | 'logistic_regression';
 export type EncodingKey = 'last_state' | 'aggregation' | 'index';
 
 export interface EncodingRun {
@@ -28,14 +28,14 @@ export const MODELS: { key: ModelKey; name: string; summary: string; details: st
 		name: 'XGBoost',
 		summary: 'Gradient-boosted trees',
 		details:
-			'200 shallow trees (depth 3) built one after another, each one correcting the errors of the previous ones. Missing lab values are handled natively.'
+			'200 shallow trees (depth 3) built one after another, each one correcting the errors of the previous ones. Missing lab values are handled natively. AUC averaged over 3 seeds.'
 	},
 	{
 		key: 'random_forest',
 		name: 'Random forest',
 		summary: 'Bagged decision trees',
 		details:
-			'300 independent trees, each grown on a bootstrap sample and a random subset of features, then averaged. Missing lab values are filled with the training median.'
+			'300 independent trees (min. 5 samples per leaf), each grown on a bootstrap sample and a random subset of features, then averaged; AUC averaged over 3 seeds. Missing lab values are filled with the training median.'
 	},
 	{
 		key: 'logistic_regression',
@@ -43,13 +43,6 @@ export const MODELS: { key: ModelKey; name: string; summary: string; details: st
 		summary: 'Linear baseline',
 		details:
 			'A regularised linear model (C = 0.1) on standardised features. Easy to interpret, but it can only add up effects, not combine them.'
-	},
-	{
-		key: 'svm',
-		name: 'SVM',
-		summary: 'Kernel method',
-		details:
-			'Support vector machine with an RBF kernel on standardised features; probabilities come from Platt scaling. Sensitive to many sparse one-hot columns.'
 	}
 ];
 
